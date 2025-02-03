@@ -19,7 +19,7 @@
   <!-- ! Hide app brand if navbar-full -->
   <div class="app-brand demo">
     <a href="{{url('/dashboard')}}" class="app-brand-link">
-      <img src="{{asset('logo-no-bg.png')}}" class="w-px-20 h-auto">
+      <img src="{{asset('logo-no-bg.png')}}" class="w-px-40 h-auto">
       <span class="app-brand-text demo menu-text fw-bold ms-2">{{config('variables.templateName')}}</span>
     </a>
 

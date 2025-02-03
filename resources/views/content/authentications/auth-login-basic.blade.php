@@ -17,7 +17,7 @@
           <!-- Logo -->
           <div class="app-brand justify-content-center">
             <a href="{{url('/dashboard')}}" class="app-brand-link gap-2">
-              <img src="{{asset('logo-no-bg.png')}}" class="w-px-20 h-auto">
+              <img src="{{asset('logo-no-bg.png')}}" class="w-px-40 h-auto">
               <span class="app-brand-text demo text-body fw-bolder">{{config('variables.templateName')}}</span>
             </a>
           </div>
