@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Exception;
 use Laravel\Sanctum\HasApiTokens;
+use Chargily\ChargilyPay\ChargilyPay;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
+use Chargily\ChargilyPay\Auth\Credentials;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,11 +76,13 @@ class User extends Authenticatable
     return $this->hasMany(Notification::class);
   }
 
-  public function reminders(){
+  public function reminders()
+  {
     return $this->hasMany(Reminder::class);
   }
 
-  public function locations(){
+  public function locations()
+  {
     return $this->hasMany(Location::class);
   }
 
@@ -136,6 +141,28 @@ class User extends Authenticatable
       );
     }
 
+  }
+
+  public function create_chargily_account()
+  {
+    try {
+      if (empty($this->customer_id) && $this->phone) {
+        $chargily_pay = new ChargilyPay(new Credentials(Set::chargily_credentials()));
+        $customer = $chargily_pay->customers()->create([
+          'name' => $this->name,
+          'email' => $this->email,
+          'phone' => $this->phone
+        ]);
+
+        $this->customer_id = $customer->getId();
+        $this->save();
+
+        return $this->customer_id;
+      }
+    } catch (Exception $e) {
+      //dd($e->getMessage());
+      return;
+    }
   }
 
 

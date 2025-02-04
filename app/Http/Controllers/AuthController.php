@@ -107,17 +107,7 @@ class AuthController extends Controller
           case 2 : throw new Exception('deactivated account');
         }
 
-        if (empty($user->customer_id) && $user->phone) {
-          $chargily_pay = new ChargilyPay(new Credentials(Set::chargily_credentials()));
-          $customer = $chargily_pay->customers()->create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone
-          ]);
-
-          $user->customer_id = $customer->getId();
-          $user->save();
-        }
+        $user->create_chargily_account();
 
         if($request->has('fcm_token')){
           $user->fcm_token = $request->fcm_token;
