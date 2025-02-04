@@ -146,22 +146,22 @@ class User extends Authenticatable
   public function create_chargily_account()
   {
     try {
-      if (empty($this->customer_id) && $this->phone) {
-        $chargily_pay = new ChargilyPay(new Credentials(Set::chargily_credentials()));
-        $customer = $chargily_pay->customers()->create([
-          'name' => $this->name,
-          'email' => $this->email,
-          'phone' => $this->phone
-        ]);
 
-        $this->customer_id = $customer->getId();
-        $this->save();
+      $chargily_pay = new ChargilyPay(new Credentials(Set::chargily_credentials()));
+      $customer = $chargily_pay->customers()->create([
+        'name' => $this->name,
+        'email' => $this->email,
+        'phone' => $this->phone
+      ]);
 
-        return $this->customer_id;
-      }
+      $this->customer_id = $customer->getId();
+      $this->save();
+
+      return true;
+
     } catch (Exception $e) {
       //dd($e->getMessage());
-      return;
+      return false;
     }
   }
 
