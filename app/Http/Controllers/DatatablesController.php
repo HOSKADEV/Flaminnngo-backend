@@ -730,7 +730,8 @@ class DatatablesController extends Controller
   public function users()
   {
 
-    $users = User::where('role', 1)->whereIn('status', [0, 1])->get();
+    //$users = User::where('role', 1)->whereIn('status', [0, 1])->get();
+        $users = User::all();
 
     return datatables()
       ->of($users)

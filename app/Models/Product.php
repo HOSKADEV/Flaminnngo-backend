@@ -19,11 +19,11 @@ class Product extends Model
       'unit_id',
       'unit_name',
       'pack_name',
-      'image',
       'unit_price',
       'pack_price',
       'pack_units',
       'unit_type',
+      'image',
       'status',
       'description'
     ];
